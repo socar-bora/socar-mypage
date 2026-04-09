@@ -406,8 +406,8 @@
       <div class="sections">
         <section>
           <div class="section-label">등록된 결제수단</div>
-          <div class="card-list">
-            <div class="card-item primary">
+          <div class="card-list" id="card-list">
+            <div class="card-item primary" data-card>
               <div class="card-info">
                 <div class="card-name-row">
                   <div class="card-name-detail">
@@ -419,7 +419,7 @@
               </div>
               <button class="btn-sm secondary">삭제</button>
             </div>
-            <div class="card-item">
+            <div class="card-item" data-card>
               <div class="card-info">
                 <div class="card-name-row">
                   <div class="card-name-detail">
@@ -430,7 +430,7 @@
               </div>
               <button class="btn-sm secondary">삭제</button>
             </div>
-            <div class="card-item">
+            <div class="card-item" data-card>
               <div class="card-info">
                 <div class="card-name-row">
                   <div class="card-name-detail"><span class="name">네이버페이</span></div>
@@ -627,6 +627,29 @@
   window.addEventListener('resize', function() {
     if (!isMobile()) {
       document.body.classList.remove('mobile-subpage');
+    }
+  });
+
+  // Card selection: click to set as primary
+  document.getElementById('card-list').addEventListener('click', function(e) {
+    const card = e.target.closest('[data-card]');
+    if (!card || e.target.closest('.btn-sm')) return;
+
+    // Remove primary from all
+    document.querySelectorAll('[data-card]').forEach(c => {
+      c.classList.remove('primary');
+      const badge = c.querySelector('.badge-primary');
+      if (badge) badge.remove();
+    });
+
+    // Set clicked as primary
+    card.classList.add('primary');
+    const nameRow = card.querySelector('.card-name-row');
+    if (!nameRow.querySelector('.badge-primary')) {
+      const badge = document.createElement('span');
+      badge.className = 'badge-primary';
+      badge.textContent = '기본 수단';
+      nameRow.appendChild(badge);
     }
   });
 </script>
