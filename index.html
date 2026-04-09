@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쏘카 - 마이페이지</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<style>
+  :root {
+    --white: #ffffff;
+    --gray-50: #f9f9fb;
+    --gray-100: #f2f3f8;
+    --blue-50: #ebf5ff;
+    --blue-100: #d6ebff;
+    --blue-400: #3393ff;
+    --blue-500: #0078ff;
+    --orange-600: #fa7900;
+    --border-weak: #f2f3f8;
+    --border-regular: #e5e8ef;
+    --text-strong: #141a24;
+    --text-primary: #354153;
+    --text-secondary: #697383;
+    --text-disabled: #b4bbcb;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif;
+    background: var(--white); color: var(--text-strong);
+    height: 100vh; display: flex; flex-direction: column;
+  }
+
+  /* ── Header ── */
+  .header {
+    height: 60px; background: var(--white);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; flex-shrink: 0;
+  }
+  .logo { display: flex; align-items: center; gap: 6px; text-decoration: none; }
+  .logo-text { font-size: 20px; font-weight: 800; color: var(--text-strong); letter-spacing: -0.5px; }
+  .header-profile {
+    width: 32px; height: 32px; background: var(--gray-100);
+    border: 1px solid var(--border-regular); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .header-hamburger { display: none; cursor: pointer; padding: 4px; }
+  .header-back { display: none; cursor: pointer; padding: 6px; }
+
+  /* ── Layout ── */
+  .layout { display: flex; flex: 1; min-height: 0; }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: 320px; padding: 32px 40px; background: var(--white);
+    flex-shrink: 0; display: flex; flex-direction: column; gap: 32px;
+    overflow-y: auto;
+  }
+  .user-profile { display: flex; gap: 14px; align-items: center; }
+  .avatar-wrap { position: relative; width: 56px; height: 56px; flex-shrink: 0; }
+  .avatar {
+    width: 56px; height: 56px; background: var(--gray-50);
+    border: 1px solid var(--border-weak); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .avatar-edit {
+    position: absolute; bottom: 0; right: 0; width: 24px; height: 24px;
+    background: var(--white); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 1px var(--border-regular);
+  }
+  .user-name { font-size: 14px; font-weight: 600; line-height: 22px; color: var(--text-strong); }
+  .user-email { font-size: 13px; font-weight: 400; line-height: 20px; color: var(--text-secondary); }
+
+  .nav { display: flex; flex-direction: column; gap: 4px; }
+  .nav-item {
+    padding: 12px 16px; border-radius: 10px;
+    font-size: 14px; font-weight: 400; line-height: 22px;
+    color: var(--text-strong); cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-item:hover { background: var(--gray-50); }
+  .nav-item.active { background: var(--gray-100); font-weight: 600; }
+  .nav-chevron { display: none; }
+
+  /* ── Content ── */
+  .content-area {
+    flex: 1; display: flex; justify-content: center;
+    background: var(--white); overflow-y: auto; padding: 32px 96px;
+  }
+  .content-inner { width: 576px; display: flex; flex-direction: column; gap: 32px; }
+  .page-title { font-size: 24px; font-weight: 700; line-height: 34px; color: var(--text-strong); }
+  .sections { display: flex; flex-direction: column; gap: 36px; }
+  .section-label {
+    font-size: 14px; font-weight: 600; line-height: 22px;
+    color: var(--text-secondary); margin-bottom: 12px;
+  }
+
+  /* Page visibility */
+  .page { display: none; }
+  .page.active { display: flex; }
+
+  /* ── 개인 정보 ── */
+  .info-group { display: flex; flex-direction: column; gap: 20px; }
+  .info-field { display: flex; flex-direction: column; gap: 6px; }
+  .info-label { font-size: 14px; font-weight: 600; line-height: 22px; color: var(--text-primary); }
+  .info-value { font-size: 16px; font-weight: 400; line-height: 24px; color: var(--text-primary); }
+
+  /* ── 결제 관리 ── */
+  .card-list { display: flex; flex-direction: column; gap: 8px; }
+  .card-item {
+    border: 1px solid var(--border-regular); border-radius: 10px;
+    padding: 14px 16px; display: flex; align-items: center;
+    justify-content: space-between; background: var(--white);
+  }
+  .card-item.primary { background: var(--blue-50); border-color: var(--blue-400); }
+  .card-info { display: flex; flex-direction: column; gap: 2px; }
+  .card-name-row { display: flex; align-items: center; gap: 10px; }
+  .card-name-detail {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 14px; line-height: 22px; color: var(--text-primary); white-space: nowrap;
+  }
+  .card-name-detail .name { font-weight: 600; }
+  .card-name-detail .number { font-weight: 400; }
+  .badge-primary {
+    background: var(--white); border: 1px solid var(--blue-100);
+    border-radius: 4px; padding: 2px 6px;
+    font-size: 10px; font-weight: 600; line-height: 16px;
+    color: var(--blue-500); white-space: nowrap;
+  }
+  .card-type { font-size: 12px; font-weight: 500; line-height: 18px; color: var(--text-secondary); }
+  .btn-sm {
+    border: 1px solid var(--border-regular); border-radius: 8px;
+    padding: 6px 10px; font-family: 'Pretendard Variable', sans-serif;
+    font-size: 12px; font-weight: 500; line-height: 18px;
+    cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  }
+  .btn-sm.secondary { background: var(--white); color: var(--text-primary); }
+  .btn-sm.secondary:hover { background: var(--gray-50); }
+  .btn-sm.primary { background: var(--white); color: var(--blue-500); }
+  .btn-sm.primary:hover { background: var(--blue-50); }
+  .btn-sm.disabled { background: var(--gray-100); color: var(--text-disabled); cursor: default; }
+
+  .add-cards { display: flex; gap: 12px; }
+  .add-card {
+    flex: 1; height: 100px; border: 1px solid var(--border-regular);
+    border-radius: 10px; position: relative; background: var(--white);
+    cursor: pointer; overflow: hidden;
+  }
+  .add-card:hover { background: var(--gray-50); }
+  .add-card-title {
+    position: absolute; top: 15px; left: 15px;
+    font-size: 16px; font-weight: 600; line-height: 24px;
+    color: var(--text-primary); white-space: nowrap;
+  }
+  .add-card-promo {
+    position: absolute; top: 39px; left: 15px;
+    font-size: 10px; font-weight: 600; line-height: 16px;
+    color: var(--blue-500); white-space: nowrap;
+  }
+  .add-card-badge { position: absolute; display: flex; align-items: center; justify-content: center; }
+  .add-card-badge.credit { bottom: 11px; right: 15px; }
+  .add-card-badge.naver { bottom: 13px; right: 13px; }
+  .add-card-badge.kakao { bottom: 11px; right: 10px; }
+  .naver-pay { display: flex; align-items: center; gap: 1px; }
+  .naver-pay .n-badge {
+    background: #1EC800; color: #fff; font-size: 11px; font-weight: 800;
+    width: 16px; height: 16px; border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .naver-pay .pay-text { font-size: 13px; font-weight: 700; color: #1EC800; margin-left: 2px; }
+  .kakao-pay { display: flex; align-items: center; gap: 2px; }
+  .kakao-pay .k-dot { width: 8px; height: 8px; background: #FFE500; border-radius: 50%; }
+  .kakao-pay .pay-text { font-size: 14px; font-weight: 800; color: #3C1E1E; letter-spacing: -0.5px; }
+
+  .notice {
+    background: var(--gray-50); border-radius: 12px; padding: 14px 14px 16px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .notice-item { display: flex; align-items: flex-start; gap: 2px; }
+  .notice-dot {
+    width: 16px; min-height: 22px;
+    display: flex; align-items: flex-start; justify-content: center;
+    flex-shrink: 0; padding-top: 9px;
+  }
+  .notice-dot::before {
+    content: ''; width: 4px; height: 4px; border-radius: 50%;
+    background: var(--text-secondary); display: block;
+  }
+  .notice-text { font-size: 14px; font-weight: 400; line-height: 22px; color: var(--text-secondary); }
+
+  /* ── 로그인 및 보안 ── */
+  .setting-group { display: flex; flex-direction: column; gap: 20px; }
+  .setting-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+  .setting-info { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .setting-title { font-size: 14px; font-weight: 600; line-height: 22px; color: var(--text-primary); }
+  .setting-desc { font-size: 12px; font-weight: 500; line-height: 18px; color: var(--orange-600); }
+  .divider { height: 1px; background: var(--border-weak); width: 100%; }
+  .account-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .account-info { display: flex; align-items: center; gap: 12px; flex: 1; }
+  .account-icon {
+    width: 24px; height: 24px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+    font-size: 12px; font-weight: 800; color: #fff;
+  }
+  .account-icon.apple { background: #000; }
+  .account-icon.kakao { background: #FEE500; color: #3C1E1E; }
+  .account-icon.naver { background: #03C75A; }
+  .account-name { font-size: 14px; font-weight: 600; line-height: 22px; color: var(--text-primary); }
+
+  /* ── 이용 정보 ── */
+  .link-card-list { display: flex; flex-direction: column; gap: 14px; }
+  .link-card {
+    border: 1px solid var(--border-regular); border-radius: 10px;
+    padding: 28px 20px; display: flex; align-items: center;
+    justify-content: space-between; gap: 20px;
+    background: var(--white); cursor: pointer;
+  }
+  .link-card:hover { background: var(--gray-50); }
+  .link-card-info { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .link-card-title {
+    font-size: 16px; font-weight: 600; line-height: 24px; color: var(--text-primary);
+  }
+  .link-card-desc {
+    font-size: 14px; font-weight: 400; line-height: 22px; color: var(--text-secondary);
+  }
+  .link-card-chevron { flex-shrink: 0; }
+
+  /* ══════════════════════════════════════
+     TABLET / NARROW DESKTOP (769px ~ 1080px)
+     사이드바 min-width 레이아웃
+     ══════════════════════════════════════ */
+  @media (min-width: 769px) and (max-width: 1080px) {
+    .header { padding: 0 16px; }
+    .sidebar { width: auto; min-width: 200px; max-width: 240px; padding: 32px 16px; }
+    .content-area { padding: 32px 32px; }
+    .content-inner { width: 100%; max-width: 576px; }
+  }
+
+  /* ══════════════════════════════════════
+     MOBILE (max-width: 768px)
+     ══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .header { height: 52px; padding: 0 10px; }
+    .header-profile { display: none; }
+    .header-hamburger { display: flex; }
+
+    /* Mobile: back button in header (hidden by default, shown on sub-page) */
+    body.mobile-subpage .header-hamburger { display: none; }
+    body.mobile-subpage .header-back { display: flex; }
+    body.mobile-subpage .logo { display: none; }
+
+    .layout { flex-direction: column; }
+
+    /* Sidebar → mobile menu */
+    .sidebar {
+      width: 100%; padding: 24px 16px 32px;
+      overflow-y: visible;
+    }
+    .user-name { font-size: 18px; line-height: 26px; }
+    .user-email { font-size: 14px; line-height: 22px; }
+
+    .nav { gap: 6px; }
+    .nav-item {
+      font-size: 16px; line-height: 24px; font-weight: 400;
+      padding: 12px 16px; border-radius: 10px;
+      background: var(--white);
+    }
+    .nav-item.active { background: var(--white); font-weight: 400; }
+    .nav-item:hover { background: var(--gray-50); }
+    .nav-chevron { display: block; flex-shrink: 0; }
+
+    /* Hide content area by default on mobile (show menu) */
+    .content-area { display: none; padding: 24px 16px 32px; }
+    .content-inner { width: 100%; }
+
+    /* When sub-page is active on mobile */
+    body.mobile-subpage .sidebar { display: none; }
+    body.mobile-subpage .content-area { display: flex; }
+
+    /* Add cards stack on narrow screens */
+    .add-cards { flex-wrap: wrap; }
+    .add-card { min-width: calc(50% - 6px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <!-- Back button (mobile sub-page only) -->
+  <div class="header-back" id="btn-back">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="#141a24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <a class="logo" href="#">
+    <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
+      <rect width="28" height="28" rx="6" fill="url(#socar_grad)"/>
+      <path d="M8.5 10.5C8.5 9.12 9.62 8 11 8h1c1.38 0 2.5 1.12 2.5 2.5v0c0 1.38-1.12 2.5-2.5 2.5h-1C9.62 13 8.5 11.88 8.5 10.5z" fill="#fff"/>
+      <path d="M13.5 17.5c0 1.38 1.12 2.5 2.5 2.5h1c1.38 0 2.5-1.12 2.5-2.5v0c0-1.38-1.12-2.5-2.5-2.5h-1c-1.38 0-2.5 1.12-2.5 2.5z" fill="#fff"/>
+      <defs><linearGradient id="socar_grad" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#00C3FF"/><stop offset="1" stop-color="#0066FF"/></linearGradient></defs>
+    </svg>
+    <span class="logo-text">socar</span>
+  </a>
+  <!-- Desktop: profile / Mobile: hamburger -->
+  <div class="header-profile">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="#697383"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z"/></svg>
+  </div>
+  <div class="header-hamburger">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="#141a24" stroke-width="2" stroke-linecap="round"/></svg>
+  </div>
+</header>
+
+<!-- Layout -->
+<div class="layout">
+  <!-- Sidebar / Mobile Menu -->
+  <aside class="sidebar">
+    <div class="user-profile">
+      <div class="avatar-wrap">
+        <div class="avatar">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#b0b8c4"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z"/></svg>
+        </div>
+        <div class="avatar-edit">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="#354153"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+      </div>
+      <div>
+        <div class="user-name">김쏘카님</div>
+        <div class="user-email">socarabc@socar.kr</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <div class="nav-item" data-page="personal">
+        <span>개인 정보</span>
+        <svg class="nav-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#b0b8c4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="nav-item" data-page="security">
+        <span>로그인 및 보안</span>
+        <svg class="nav-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#b0b8c4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="nav-item active" data-page="payment">
+        <span>결제 관리</span>
+        <svg class="nav-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#b0b8c4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="nav-item" data-page="license">
+        <span>면허 관리</span>
+        <svg class="nav-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#b0b8c4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="nav-item" data-page="usage">
+        <span>이용 정보</span>
+        <svg class="nav-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#b0b8c4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Content -->
+  <main class="content-area">
+
+    <!-- 개인 정보 -->
+    <div class="content-inner page" id="page-personal">
+      <h1 class="page-title">개인 정보</h1>
+      <div class="info-group">
+        <div>
+          <div class="info-field">
+            <div class="info-label">이름</div>
+            <div class="info-value">김쏘카</div>
+          </div>
+          <div class="divider" style="margin-top:18px;"></div>
+        </div>
+        <div>
+          <div class="info-field">
+            <div class="info-label">아이디</div>
+            <div class="info-value">socarabc@socar.kr</div>
+          </div>
+          <div class="divider" style="margin-top:18px;"></div>
+        </div>
+        <div class="info-field">
+          <div class="info-label">이메일 주소</div>
+          <div class="info-value">socarabc@socar.kr</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 결제 관리 -->
+    <div class="content-inner page active" id="page-payment">
+      <h1 class="page-title">결제 관리</h1>
+      <div class="sections">
+        <section>
+          <div class="section-label">등록된 결제수단</div>
+          <div class="card-list">
+            <div class="card-item primary">
+              <div class="card-info">
+                <div class="card-name-row">
+                  <div class="card-name-detail">
+                    <span class="name">롯데카드</span><span class="number">3608</span>
+                  </div>
+                  <span class="badge-primary">기본 수단</span>
+                </div>
+                <div class="card-type">법인</div>
+              </div>
+              <button class="btn-sm secondary">삭제</button>
+            </div>
+            <div class="card-item">
+              <div class="card-info">
+                <div class="card-name-row">
+                  <div class="card-name-detail">
+                    <span class="name">현대카드</span><span class="number">8409</span>
+                  </div>
+                </div>
+                <div class="card-type">개인</div>
+              </div>
+              <button class="btn-sm secondary">삭제</button>
+            </div>
+            <div class="card-item">
+              <div class="card-info">
+                <div class="card-name-row">
+                  <div class="card-name-detail"><span class="name">네이버페이</span></div>
+                </div>
+                <div class="card-type">간편결제</div>
+              </div>
+              <button class="btn-sm secondary">삭제</button>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="section-label">결제수단 추가</div>
+          <div class="add-cards">
+            <div class="add-card">
+              <div class="add-card-title">카드 등록</div>
+              <div class="add-card-promo">법인카드 3만 크레딧!</div>
+              <div class="add-card-badge credit">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#697383"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V10h16v6zm0-10H4V6h16v2z"/></svg>
+              </div>
+            </div>
+            <div class="add-card">
+              <div class="add-card-title">네이버페이</div>
+              <div class="add-card-badge naver">
+                <div class="naver-pay"><div class="n-badge">N</div><span class="pay-text">pay</span></div>
+              </div>
+            </div>
+            <div class="add-card">
+              <div class="add-card-title">카카오페이</div>
+              <div class="add-card-badge kakao">
+                <div class="kakao-pay"><div class="k-dot"></div><span class="pay-text">pay</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="notice">
+          <div class="notice-item">
+            <div class="notice-dot"></div>
+            <div class="notice-text">차량 이용 전 등록된 카드 상태를 다시 확인해주세요.</div>
+          </div>
+          <div class="notice-item">
+            <div class="notice-dot"></div>
+            <div class="notice-text">주행요금/패널티 등 반납 후 결제되지 않은 요금은 등록된 결제카드로 전체 또는 일부 금액이 결제될 수 있습니다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 로그인 및 보안 -->
+    <div class="content-inner page" id="page-security">
+      <h1 class="page-title">로그인 및 보안</h1>
+      <div class="sections">
+        <div class="setting-group">
+          <div>
+            <div class="setting-row">
+              <div class="setting-info">
+                <div class="setting-title">비밀번호 재설정</div>
+                <div class="setting-desc">재설정은 쏘카 앱에서 진행할 수 있습니다.</div>
+              </div>
+              <button class="btn-sm disabled">재설정</button>
+            </div>
+            <div class="divider" style="margin-top:18px;"></div>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-title">휴대폰 번호 재설정</div>
+              <div class="setting-desc">재설정은 쏘카 앱에서 진행할 수 있습니다.</div>
+            </div>
+            <button class="btn-sm disabled">재설정</button>
+          </div>
+        </div>
+        <div class="setting-group">
+          <div class="setting-title" style="margin-bottom:0;">계정 연동 설정</div>
+          <div>
+            <div class="account-row">
+              <div class="account-info">
+                <div class="account-icon apple">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M17.05 20.28c-.98.95-2.05-.16-3.09-.16-1.09 0-2.2 1.18-3.18.17C7.62 17 5.96 8.61 9.7 6.65c1.1-.58 2.27.04 3.07.04.78 0 2.17-.76 3.4-.14 1.72.87 2.34 2.85 2.34 2.85s-2.14 1.16-2.12 3.54c.03 2.85 2.54 3.83 2.54 3.83s-1.32 3.5-1.88 3.51z"/><path d="M14.34 4.39c.64-.83 1.1-1.98.96-3.14-1.05.1-2.29.73-3.01 1.6-.65.76-1.22 1.97-1.06 3.12 1.14.03 2.33-.62 3.11-1.58z"/></svg>
+                </div>
+                <div class="account-name">애플</div>
+              </div>
+              <button class="btn-sm primary">연동하기</button>
+            </div>
+            <div class="divider" style="margin-top:18px;"></div>
+          </div>
+          <div>
+            <div class="account-row">
+              <div class="account-info">
+                <div class="account-icon kakao">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#3C1E1E"><path d="M12 3C6.48 3 2 6.36 2 10.5c0 2.72 1.86 5.1 4.64 6.43l-.96 3.53c-.08.28.24.5.47.34l4.1-2.73c.57.06 1.15.1 1.75.1 5.52 0 10-3.36 10-7.5S17.52 3 12 3z"/></svg>
+                </div>
+                <div class="account-name">카카오톡</div>
+              </div>
+              <button class="btn-sm secondary">해제하기</button>
+            </div>
+            <div class="divider" style="margin-top:18px;"></div>
+          </div>
+          <div class="account-row">
+            <div class="account-info">
+              <div class="account-icon naver">
+                <span style="font-size:13px; font-weight:800;">N</span>
+              </div>
+              <div class="account-name">네이버</div>
+            </div>
+            <button class="btn-sm secondary">해제하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 이용 정보 -->
+    <div class="content-inner page" id="page-usage">
+      <h1 class="page-title">이용 정보</h1>
+      <div class="link-card-list">
+        <div class="link-card">
+          <div class="link-card-info">
+            <div class="link-card-title">약관 및 정책</div>
+            <div class="link-card-desc">서비스 이용약관, 개인정보 처리방침 등</div>
+          </div>
+          <svg class="link-card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#b0b8c4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="link-card">
+          <div class="link-card-info">
+            <div class="link-card-title">회원 탈퇴하기</div>
+            <div class="link-card-desc">탈퇴 시 모든 데이터가 삭제됩니다.</div>
+          </div>
+          <svg class="link-card-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#b0b8c4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+
+  // Navigate to a page
+  function goToPage(page) {
+    // Nav active state
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const navItem = document.querySelector(`.nav-item[data-page="${page}"]`);
+    if (navItem) navItem.classList.add('active');
+
+    // Page switch
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('page-' + page);
+    if (target) target.classList.add('active');
+
+    // Mobile: enter sub-page mode
+    if (isMobile()) {
+      document.body.classList.add('mobile-subpage');
+    }
+  }
+
+  // Back to menu (mobile)
+  function goBack() {
+    document.body.classList.remove('mobile-subpage');
+  }
+
+  // Nav click
+  document.getElementById('nav').addEventListener('click', function(e) {
+    const item = e.target.closest('.nav-item');
+    if (!item) return;
+    goToPage(item.dataset.page);
+  });
+
+  // Back button
+  document.getElementById('btn-back').addEventListener('click', goBack);
+
+  // On resize: if going to desktop while in mobile-subpage, clean up
+  window.addEventListener('resize', function() {
+    if (!isMobile()) {
+      document.body.classList.remove('mobile-subpage');
+    }
+  });
+</script>
+
+</body>
+</html>
