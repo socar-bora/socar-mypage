@@ -303,9 +303,21 @@
     body.mobile-subpage .sidebar { display: none; }
     body.mobile-subpage .content-area { display: flex; }
 
-    /* Add cards stack on narrow screens */
-    .add-cards { flex-wrap: wrap; }
-    .add-card { min-width: calc(50% - 6px); }
+    /* 결제수단 추가: 모바일 세로 리스트 */
+    .pay-add-cards { flex-direction: column; }
+    .pay-add-card-inner {
+      flex-direction: row; align-items: center; justify-content: space-between;
+      height: auto; min-height: 65px; padding: 12px 16px;
+    }
+    /* 유의사항 모바일 폰트 */
+    .notice-text { font-size: 13px; line-height: 20px; }
+
+    /* 결제 카드 모바일 */
+    .pay-card { width: 100%; }
+    .sec-info-section { width: 100%; }
+
+    /* 모바일 content padding */
+    body.mobile-subpage .content-area { padding: 24px 16px 80px; }
   }
 </style>
 </head>
