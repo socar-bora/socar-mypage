@@ -104,72 +104,52 @@
   .info-label { font-size: 14px; font-weight: 600; line-height: 22px; color: var(--text-primary); }
   .info-value { font-size: 16px; font-weight: 400; line-height: 24px; color: var(--text-primary); }
 
-  /* ── 결제 관리 ── */
-  .card-list { display: flex; flex-direction: column; gap: 8px; }
-  .card-item {
+  /* ── 결제수단 관리 ── */
+  .pay-card {
     border: 1px solid var(--border-regular); border-radius: 10px;
-    padding: 14px 16px; display: flex; align-items: center;
-    justify-content: space-between; background: var(--white);
+    padding: 16px 20px; background: var(--white);
   }
-  .card-item.primary { background: var(--blue-50); border-color: var(--blue-400); }
-  .card-info { display: flex; flex-direction: column; gap: 2px; }
-  .card-name-row { display: flex; align-items: center; gap: 10px; }
-  .card-name-detail {
-    display: flex; align-items: center; gap: 6px;
+  .pay-card-primary {
+    border: 1.8px solid #262f3c; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .pay-card-body {
+    display: flex; align-items: center; gap: 24px;
+  }
+  .pay-card-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .pay-card-name-row { display: flex; align-items: center; gap: 8px; }
+  .pay-card-name {
+    display: flex; align-items: center; gap: 4px;
     font-size: 14px; line-height: 22px; color: var(--text-primary); white-space: nowrap;
   }
-  .card-name-detail .name { font-weight: 600; }
-  .card-name-detail .number { font-weight: 400; }
-  .badge-primary {
-    background: var(--white); border: 1px solid var(--blue-100);
+  .pay-card-name-bold { font-weight: 600; }
+  .pay-card-name-num { font-weight: 400; }
+  .pay-badge {
+    background: var(--blue-50); border: 1px solid var(--blue-100);
     border-radius: 4px; padding: 2px 6px;
     font-size: 10px; font-weight: 600; line-height: 16px;
-    color: var(--blue-500); white-space: nowrap;
+    color: #0078ff; white-space: nowrap;
   }
-  .card-type { font-size: 12px; font-weight: 500; line-height: 18px; color: var(--text-secondary); }
-  .btn-sm {
-    border: 1px solid var(--border-regular); border-radius: 8px;
-    padding: 6px 10px; font-family: 'Pretendard Variable', sans-serif;
-    font-size: 12px; font-weight: 500; line-height: 18px;
-    cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  .pay-card-type {
+    font-size: 12px; font-weight: 500; line-height: 18px; color: var(--text-secondary);
   }
-  .btn-sm.secondary { background: var(--white); color: var(--text-primary); }
-  .btn-sm.secondary:hover { background: var(--gray-50); }
-  .btn-sm.primary { background: var(--white); color: var(--blue-500); }
-  .btn-sm.primary:hover { background: var(--blue-50); }
-  .btn-sm.disabled { background: var(--gray-100); color: var(--text-disabled); cursor: default; }
-
-  .add-cards { display: flex; gap: 12px; }
-  .add-card {
-    flex: 1; height: 100px; border: 1px solid var(--border-regular);
-    border-radius: 10px; position: relative; background: var(--white);
-    cursor: pointer; overflow: hidden;
+  .btn-more {
+    display: flex; align-items: center; gap: 2px;
+    background: none; border: none; cursor: pointer;
+    font-family: 'Pretendard Variable', sans-serif;
+    font-size: 13px; font-weight: 600; line-height: 20px;
+    color: var(--text-secondary);
   }
-  .add-card:hover { background: var(--gray-50); }
-  .add-card-title {
-    position: absolute; top: 15px; left: 15px;
-    font-size: 16px; font-weight: 600; line-height: 24px;
-    color: var(--text-primary); white-space: nowrap;
+  .btn-more:hover { color: var(--text-primary); }
+  .pay-add-cards { display: flex; gap: 12px; }
+  .pay-add-card {
+    flex: 1; border: 1px solid var(--border-regular); border-radius: 10px;
+    background: var(--white); cursor: pointer; overflow: hidden;
   }
-  .add-card-promo {
-    position: absolute; top: 39px; left: 15px;
-    font-size: 10px; font-weight: 600; line-height: 16px;
-    color: var(--blue-500); white-space: nowrap;
+  .pay-add-card:hover { background: var(--gray-50); }
+  .pay-add-card-inner {
+    display: flex; flex-direction: column; padding: 12px 16px;
+    height: 110px;
   }
-  .add-card-badge { position: absolute; display: flex; align-items: center; justify-content: center; }
-  .add-card-badge.credit { bottom: 11px; right: 15px; }
-  .add-card-badge.naver { bottom: 13px; right: 13px; }
-  .add-card-badge.kakao { bottom: 11px; right: 10px; }
-  .naver-pay { display: flex; align-items: center; gap: 1px; }
-  .naver-pay .n-badge {
-    background: #1EC800; color: #fff; font-size: 11px; font-weight: 800;
-    width: 16px; height: 16px; border-radius: 3px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .naver-pay .pay-text { font-size: 13px; font-weight: 700; color: #1EC800; margin-left: 2px; }
-  .kakao-pay { display: flex; align-items: center; gap: 2px; }
-  .kakao-pay .k-dot { width: 8px; height: 8px; background: #FFE500; border-radius: 50%; }
-  .kakao-pay .pay-text { font-size: 14px; font-weight: 800; color: #3C1E1E; letter-spacing: -0.5px; }
 
   .notice {
     background: var(--gray-50); border-radius: 12px; padding: 14px 14px 16px;
@@ -342,9 +322,7 @@
     <img src="assets/socar-logotype.svg" alt="socar" style="height:14px;">
   </a>
   <!-- Desktop: profile / Mobile: hamburger -->
-  <div class="header-profile">
-    <img src="assets/icon-user.svg" alt="" style="width:18px;height:18px;">
-  </div>
+  <!-- header-profile removed per Figma -->
   <div class="header-hamburger">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="#141a24" stroke-width="2" stroke-linecap="round"/></svg>
   </div>
@@ -417,71 +395,97 @@
       </div>
     </div>
 
-    <!-- 결제 관리 -->
+    <!-- 결제수단 관리 -->
     <div class="content-inner page" id="page-payment">
-      <h1 class="page-title">결제 관리</h1>
-      <div class="sections">
-        <section>
-          <div class="section-label">등록된 결제수단</div>
-          <div class="card-list" id="card-list">
-            <div class="card-item primary" data-card>
-              <div class="card-info">
-                <div class="card-name-row">
-                  <div class="card-name-detail">
-                    <span class="name">롯데카드</span><span class="number">3608</span>
+      <h1 class="page-title">결제수단 관리</h1>
+      <div class="sections" style="gap:36px;">
+        <!-- 등록된 결제수단 -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:2px;font-size:14px;font-weight:600;line-height:22px;white-space:nowrap;">
+            <span style="color:var(--text-secondary);">등록된 결제수단</span>
+            <span style="color:#0078ff;">4</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <div style="display:flex;flex-direction:column;gap:10px;width:100%;">
+              <!-- 기본 수단: 롯데카드 -->
+              <div class="pay-card pay-card-primary">
+                <div class="pay-card-body">
+                  <div class="pay-card-info">
+                    <div class="pay-card-name-row">
+                      <div class="pay-card-name">
+                        <span class="pay-card-name-bold">롯데카드</span>
+                        <span class="pay-card-name-num">3608</span>
+                      </div>
+                      <span class="pay-badge">기본 수단</span>
+                    </div>
+                    <div class="pay-card-type">법인</div>
                   </div>
-                  <span class="badge-primary">기본 수단</span>
+                  <button class="btn-action">삭제</button>
                 </div>
-                <div class="card-type">법인</div>
               </div>
-              <button class="btn-sm secondary">삭제</button>
-            </div>
-            <div class="card-item" data-card>
-              <div class="card-info">
-                <div class="card-name-row">
-                  <div class="card-name-detail">
-                    <span class="name">현대카드</span><span class="number">8409</span>
+              <!-- 현대카드 -->
+              <div class="pay-card">
+                <div class="pay-card-body">
+                  <div class="pay-card-info">
+                    <div class="pay-card-name-row">
+                      <div class="pay-card-name">
+                        <span class="pay-card-name-bold">현대카드</span>
+                        <span class="pay-card-name-num">8409</span>
+                      </div>
+                    </div>
+                    <div class="pay-card-type">개인</div>
                   </div>
+                  <button class="btn-action">삭제</button>
                 </div>
-                <div class="card-type">개인</div>
               </div>
-              <button class="btn-sm secondary">삭제</button>
             </div>
-            <div class="card-item" data-card>
-              <div class="card-info">
-                <div class="card-name-row">
-                  <div class="card-name-detail"><span class="name">네이버페이</span></div>
+            <!-- 더보기 버튼 -->
+            <button class="btn-more" id="btn-more-cards">
+              <span>2개 더보기</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#697383" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <!-- 결제수단 추가 -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:14px;font-weight:600;line-height:22px;color:var(--text-secondary);">결제수단 추가</div>
+          <div class="pay-add-cards">
+            <div class="pay-add-card">
+              <div class="pay-add-card-inner">
+                <div style="display:flex;flex-direction:column;gap:1px;">
+                  <div style="font-size:16px;font-weight:600;line-height:24px;color:var(--text-primary);">카드 등록</div>
+                  <div style="font-size:10px;font-weight:600;line-height:16px;color:#0078ff;">법인카드 3만 크레딧!</div>
                 </div>
-                <div class="card-type">간편결제</div>
+                <svg width="22" height="17" viewBox="0 0 21.45 16.68" fill="none" xmlns="http://www.w3.org/2000/svg" style="align-self:flex-end;">
+                  <path d="M0 2.475C0 1.108 1.108 0 2.475 0H18.975C20.342 0 21.45 1.108 21.45 2.475V4.216H0V2.475Z" fill="#697383"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M0 6.233V14.208C0 15.575 1.108 16.683 2.475 16.683H18.975C20.342 16.683 21.45 15.575 21.45 14.208V6.233H0ZM3.667 11.459C3.667 11.003 4.036 10.634 4.492 10.634H8.158C8.614 10.634 8.983 11.003 8.983 11.459C8.983 11.915 8.614 12.284 8.158 12.284H4.492C4.036 12.284 3.667 11.915 3.667 11.459Z" fill="#697383"/>
+                </svg>
               </div>
-              <button class="btn-sm secondary">삭제</button>
+            </div>
+            <div class="pay-add-card">
+              <div class="pay-add-card-inner" style="justify-content:space-between;">
+                <div style="font-size:16px;font-weight:600;line-height:24px;color:var(--text-primary);">네이버페이</div>
+                <svg width="51" height="16" viewBox="0 0 49.37 15.6" fill="none" xmlns="http://www.w3.org/2000/svg" style="align-self:flex-end;">
+                  <path d="M49.37 3.1L44.36 14.37H42.04L43.64 10.8L39.79 3.1H42.18L44.74 8.37L47.06 3.1H49.37ZM38.65 11.76H36.43V11.14C35.71 11.68 34.83 11.97 33.94 11.96C31.48 11.96 29.56 9.97 29.56 7.43C29.56 4.9 31.48 2.91 33.94 2.91C34.83 2.89 35.71 3.18 36.43 3.72V3.1H38.65V11.76ZM34.24 4.78C32.84 4.78 31.79 5.92 31.79 7.43C31.79 8.94 32.84 10.08 34.24 10.08C35.64 10.08 36.7 8.94 36.7 7.43C36.7 5.92 35.64 4.78 34.24 4.78ZM19.27 3.1H21.49V3.72C22.21 3.18 23.08 2.89 23.98 2.91C26.43 2.91 28.35 4.89 28.35 7.43C28.35 9.97 26.43 11.96 23.98 11.96C23.12 11.97 22.27 11.7 21.57 11.19V14.37H19.27V3.1ZM21.22 7.43C21.22 8.94 22.27 10.08 23.67 10.08C25.07 10.08 26.13 8.94 26.13 7.43C26.13 5.92 25.07 4.78 23.67 4.78C22.27 4.78 21.22 5.92 21.22 7.43Z" fill="#03C75A"/>
+                  <path d="M15.6 7.8C15.6 12.11 12.11 15.6 7.8 15.6C3.49 15.6 0 12.11 0 7.8C0 3.49 3.49 0 7.8 0C12.11 0 15.6 3.49 15.6 7.8ZM9.43 3.78V8.32L6.25 3.78H3.78V11.82H6.17V7.28L9.36 11.82H11.82V3.78H9.43Z" fill="#03C75A"/>
+                </svg>
+              </div>
+            </div>
+            <div class="pay-add-card">
+              <div class="pay-add-card-inner" style="justify-content:space-between;">
+                <div style="font-size:16px;font-weight:600;line-height:24px;color:var(--text-primary);">카카오페이</div>
+                <svg width="48" height="20" viewBox="0 0 48 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="align-self:flex-end;">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M38 20H10C4.48 20 0 15.52 0 10C0 4.48 4.48 0 10 0H38C43.53 0 48 4.48 48 10C48 15.52 43.53 20 38 20Z" fill="#FFEB00"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M11.23 4.8C8.22 4.8 5.77 6.73 5.77 9.11C5.77 10.64 6.78 11.98 8.3 12.75L7.79 14.67C7.77 14.73 7.79 14.79 7.83 14.84C7.86 14.87 7.9 14.88 7.94 14.88C7.97 14.88 8.01 14.87 8.04 14.85L10.25 13.35C10.57 13.4 10.9 13.42 11.23 13.42C14.24 13.42 16.69 11.49 16.69 9.11C16.69 6.73 14.25 4.8 11.23 4.8Z" fill="black"/>
+                  <path d="M21.29 12.69V15.48H19.3V5.21L20.7 5.21L20.95 5.86C21.37 5.44 22.01 4.99 23.04 4.99C24.98 4.99 25.91 6.45 25.89 8.79C25.89 11.25 24.46 12.83 22.43 12.83C22.03 12.83 21.74 12.8 21.29 12.69ZM21.29 6.87V11.31C21.4 11.32 21.67 11.35 21.93 11.35C23.34 11.35 23.88 10.36 23.88 8.79C23.88 7.42 23.52 6.6 22.39 6.6C22.02 6.6 21.62 6.71 21.29 6.87Z" fill="black"/>
+                  <path d="M30.21 8.08H31.34V7.84C31.34 7.03 30.88 6.65 30.08 6.65C29.47 6.65 28.68 6.82 28.04 7.14L27.5 5.8C28.2 5.31 29.29 4.98 30.25 4.98C32.16 4.98 33.19 5.98 33.19 7.9V12.61H31.79L31.59 11.98C30.78 12.57 30.05 12.81 29.39 12.81C27.93 12.81 27.12 11.94 27.12 10.48C27.12 8.91 28.2 8.09 30.21 8.09ZM31.34 10.7V9.34H30.43C29.41 9.34 28.9 9.71 28.9 10.44C28.9 11 29.18 11.27 29.76 11.27C30.31 11.27 31 11 31.34 10.7Z" fill="black"/>
+                  <path d="M39.18 11.86C38.49 13.71 37.66 15.06 36.45 15.8L35.23 14.68C35.94 14.06 36.44 13.47 36.87 12.67L34.24 5.48L36.21 4.95L37.89 10.78L39.56 4.93L41.5 5.47L39.18 11.87Z" fill="black"/>
+                </svg>
+              </div>
             </div>
           </div>
-        </section>
-        <section>
-          <div class="section-label">결제수단 추가</div>
-          <div class="add-cards">
-            <div class="add-card">
-              <div class="add-card-title">카드 등록</div>
-              <div class="add-card-promo">법인카드 3만 크레딧!</div>
-              <div class="add-card-badge credit">
-                <img src="assets/icon-credit-card.svg" alt="" style="width:22px;height:22px;">
-              </div>
-            </div>
-            <div class="add-card">
-              <div class="add-card-title">네이버페이</div>
-              <div class="add-card-badge naver">
-                <div class="naver-pay"><div class="n-badge">N</div><span class="pay-text">pay</span></div>
-              </div>
-            </div>
-            <div class="add-card">
-              <div class="add-card-title">카카오페이</div>
-              <div class="add-card-badge kakao">
-                <div class="kakao-pay"><div class="k-dot"></div><span class="pay-text">pay</span></div>
-              </div>
-            </div>
-          </div>
-        </section>
+        </div>
+        <!-- 유의사항 -->
         <div class="notice">
           <div class="notice-item">
             <div class="notice-dot"></div>
@@ -649,28 +653,13 @@
     }
   });
 
-  // Card selection: click to set as primary
-  document.getElementById('card-list').addEventListener('click', function(e) {
-    const card = e.target.closest('[data-card]');
-    if (!card || e.target.closest('.btn-sm')) return;
-
-    // Remove primary from all
-    document.querySelectorAll('[data-card]').forEach(c => {
-      c.classList.remove('primary');
-      const badge = c.querySelector('.badge-primary');
-      if (badge) badge.remove();
+  // "더보기" toggle (placeholder)
+  const btnMore = document.getElementById('btn-more-cards');
+  if (btnMore) {
+    btnMore.addEventListener('click', function() {
+      this.style.display = 'none';
     });
-
-    // Set clicked as primary
-    card.classList.add('primary');
-    const nameRow = card.querySelector('.card-name-row');
-    if (!nameRow.querySelector('.badge-primary')) {
-      const badge = document.createElement('span');
-      badge.className = 'badge-primary';
-      badge.textContent = '기본 수단';
-      nameRow.appendChild(badge);
-    }
-  });
+  }
 </script>
 
 </body>
