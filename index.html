@@ -196,18 +196,18 @@
   .sec-info-label {
     flex: 1; font-size: 16px; font-weight: 600; line-height: 24px; color: var(--text-primary);
   }
-  .btn-pill {
-    height: 28px; padding: 5px 12px; border-radius: 14px;
+  .btn-action {
+    height: 30px; padding: 6px 10px; border-radius: 8px;
     border: 1px solid var(--border-regular); background: var(--white);
     font-family: 'Pretendard Variable', sans-serif;
     font-size: 12px; font-weight: 500; line-height: 18px;
     color: var(--text-primary); cursor: pointer; white-space: nowrap;
   }
-  .btn-pill:hover { background: var(--gray-50); }
-  .btn-pill.blue {
-    border-color: #3d7ee8; color: #3d7ee8;
+  .btn-action:hover { background: var(--gray-50); }
+  .btn-action.primary {
+    color: #0078ff;
   }
-  .btn-pill.blue:hover { background: var(--blue-50); }
+  .btn-action.primary:hover { background: var(--blue-50); }
   .divider { height: 1px; background: var(--border-weak); width: 100%; }
   .sec-account-title {
     font-size: 16px; font-weight: 600; line-height: 24px; color: var(--text-primary);
@@ -503,11 +503,11 @@
         <div class="sec-info-section">
           <div class="sec-info-row">
             <span class="sec-info-label">비밀번호</span>
-            <button class="btn-pill">재설정</button>
+            <button class="btn-action">재설정</button>
           </div>
           <div class="sec-info-row" style="border-bottom:none;">
             <span class="sec-info-label">휴대폰 번호</span>
-            <button class="btn-pill">재설정</button>
+            <button class="btn-action">재설정</button>
           </div>
         </div>
         <!-- 계정 연동 설정 -->
@@ -522,7 +522,7 @@
                 </svg>
                 <div class="account-name">카카오톡</div>
               </div>
-              <button class="btn-pill">해제하기</button>
+              <button class="btn-action">해제하기</button>
             </div>
             <div class="sec-account-row">
               <div class="account-info">
@@ -532,7 +532,7 @@
                 </svg>
                 <div class="account-name">네이버</div>
               </div>
-              <button class="btn-pill blue">연동하기</button>
+              <button class="btn-action primary">연동하기</button>
             </div>
           </div>
         </div>
