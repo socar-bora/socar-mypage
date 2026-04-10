@@ -438,8 +438,35 @@
                   <button class="btn-action">삭제</button>
                 </div>
               </div>
+              <!-- 숨겨진 카드 (더보기 클릭 시 표시) -->
+              <div class="pay-card" id="hidden-card-1" style="display:none;">
+                <div class="pay-card-body">
+                  <div class="pay-card-info">
+                    <div class="pay-card-name-row">
+                      <div class="pay-card-name">
+                        <span class="pay-card-name-bold">네이버페이</span>
+                      </div>
+                    </div>
+                    <div class="pay-card-type">간편결제</div>
+                  </div>
+                  <button class="btn-action">삭제</button>
+                </div>
+              </div>
+              <div class="pay-card" id="hidden-card-2" style="display:none;">
+                <div class="pay-card-body">
+                  <div class="pay-card-info">
+                    <div class="pay-card-name-row">
+                      <div class="pay-card-name">
+                        <span class="pay-card-name-bold">카카오페이</span>
+                      </div>
+                    </div>
+                    <div class="pay-card-type">간편결제</div>
+                  </div>
+                  <button class="btn-action">삭제</button>
+                </div>
+              </div>
             </div>
-            <!-- 더보기 버튼 -->
+            <!-- 더보기 / 접기 버튼 -->
             <button class="btn-more" id="btn-more-cards">
               <span>2개 더보기</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#697383" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -653,11 +680,16 @@
     }
   });
 
-  // "더보기" toggle (placeholder)
+  // "더보기 / 접기" toggle
   const btnMore = document.getElementById('btn-more-cards');
   if (btnMore) {
+    let expanded = false;
     btnMore.addEventListener('click', function() {
-      this.style.display = 'none';
+      expanded = !expanded;
+      document.getElementById('hidden-card-1').style.display = expanded ? '' : 'none';
+      document.getElementById('hidden-card-2').style.display = expanded ? '' : 'none';
+      this.querySelector('span').textContent = expanded ? '접기' : '2개 더보기';
+      this.querySelector('svg').style.transform = expanded ? 'rotate(180deg)' : '';
     });
   }
 </script>
